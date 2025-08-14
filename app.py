@@ -32,12 +32,25 @@ def get_video_info(video_input):
     url = f"https://www.youtube.com/watch?v={video_id}"
     
     ydl_opts = {
-        'format': 'best[height<=720]/best[height<=480]/best',
-        'no_warnings': True,
-        'extractaudio': False,
-        'quiet': True,
-        'no_color': True,
-    }
+    'format': 'best[height<=720]/best[height<=480]/best',
+    'no_warnings': True,
+    'extractaudio': False,
+    'quiet': True,
+    'no_color': True,
+    # הוספת כותרות לחיקוי דפדפן רגיל
+    'http_headers': {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+    },
+    # הוספת הגדרות נוספות לעקיפת חסימות
+    'extract_flat': False,
+    'ignoreerrors': False,
+}
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -157,4 +170,5 @@ def info():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+
     app.run(host='0.0.0.0', port=port, debug=False)
