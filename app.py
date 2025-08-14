@@ -47,9 +47,10 @@ def get_video_info(video_input):
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
     },
-    # הוספת הגדרות נוספות לעקיפת חסימות
-    'extract_flat': False,
-    'ignoreerrors': False,
+        # נסה עם הגדרות שונות אם הראשונה נכשלת
+        'retries': 3,
+        'fragment_retries': 3,
+        'extractor_retries': 3,
 }
     
     try:
@@ -172,3 +173,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
 
     app.run(host='0.0.0.0', port=port, debug=False)
+
